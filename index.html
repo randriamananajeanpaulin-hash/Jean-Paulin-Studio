@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jean Paulin Studio — Design Pédagogique & Communication Visuelle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --violet: #5B3DF5;
+    --blue-violet: #6C63FF;
+    --white: #FFFFFF;
+    --light: #F8F9FC;
+    --text: #1A1A2E;
+    --text-muted: #6B7280;
+    --border: #E8E9F0;
+    --gradient: linear-gradient(135deg, #5B3DF5 0%, #6C63FF 50%, #8B5CF6 100%);
+    --shadow-sm: 0 2px 12px rgba(91,61,245,0.08);
+    --shadow-md: 0 8px 40px rgba(91,61,245,0.12);
+    --shadow-lg: 0 24px 80px rgba(91,61,245,0.18);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ---- NOISE TEXTURE OVERLAY ---- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: .4;
+  }
+
+  /* ---- TYPOGRAPHY ---- */
+  .display { font-family: 'Fraunces', Georgia, serif; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--violet);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--violet);
+    border-radius: 2px;
+  }
+
+  h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+  h3 { font-size: 1.25rem; font-weight: 500; }
+
+  /* ---- LAYOUT ---- */
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 100px 0; }
+
+  /* ---- BUTTONS ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: none;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary {
+    background: var(--gradient);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(91,61,245,0.35);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(91,61,245,0.45);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-outline:hover {
+    border-color: var(--violet);
+    color: var(--violet);
+    transform: translateY(-2px);
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--violet);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+  .btn-white:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  .btn-ghost-white {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(8px);
+  }
+  .btn-ghost-white:hover {
+    background: rgba(255,255,255,0.22);
+    transform: translateY(-2px);
+  }
+
+  /* ---- NAVBAR ---- */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 24px;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border), var(--shadow-sm);
+  }
+  .nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--violet); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { display: flex; align-items: center; gap: 12px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 72px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(91,61,245,0.08) 0%, transparent 70%);
+    top: -100px; right: -150px;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(108,99,255,0.06) 0%, transparent 70%);
+    bottom: 0; left: -100px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding: 80px 0;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(91,61,245,0.06);
+    border: 1px solid rgba(91,61,245,0.15);
+    border-radius: 50px;
+    padding: 6px 14px 6px 8px;
+    margin-bottom: 28px;
+  }
+  .hero-badge-dot {
+    width: 8px; height: 8px;
+    background: var(--violet);
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  .hero-badge span { font-size: 12px; font-weight: 600; color: var(--violet); }
+  .hero-title { margin-bottom: 24px; color: var(--text); }
+  .hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+  .hero-perks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .hero-perk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .perk-icon {
+    width: 32px; height: 32px;
+    background: rgba(91,61,245,0.06);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .perk-icon svg { width: 16px; height: 16px; stroke: var(--violet); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* HERO MOCKUPS */
+  .hero-visual { position: relative; height: 560px; }
+  .mockup-card {
+    position: absolute;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .mockup-card:hover { transform: translateY(-8px) !important; }
+  .mc-main {
+    width: 300px; right: 0; top: 40px;
+    animation: float1 6s ease-in-out infinite;
+  }
+  .mc-secondary {
+    width: 220px; left: 0; top: 160px;
+    animation: float2 7s ease-in-out infinite;
+  }
+  .mc-tertiary {
+    width: 200px; right: 40px; bottom: 20px;
+    animation: float3 5.5s ease-in-out infinite;
+  }
+  @keyframes float1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes float2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes float3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  /* Mockup visual content */
+  .mc-header { height: 8px; background: var(--gradient); }
+  .mc-body { padding: 20px; }
+  .mc-title-line { height: 10px; background: var(--text); border-radius: 4px; margin-bottom: 8px; opacity: 0.85; }
+  .mc-sub-line { height: 7px; background: var(--border); border-radius: 4px; margin-bottom: 6px; }
+  .mc-img-block { height: 90px; background: linear-gradient(135deg, rgba(91,61,245,0.08), rgba(108,99,255,0.12)); border-radius: 10px; margin: 14px 0; display: flex; align-items: center; justify-content: center; }
+  .mc-img-block svg { width: 32px; height: 32px; opacity: 0.4; }
+  .mc-tag { display: inline-block; background: rgba(91,61,245,0.08); color: var(--violet); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+  .mc-chart { display: flex; align-items: flex-end; gap: 6px; height: 50px; margin-top: 14px; }
+  .mc-bar { flex: 1; background: var(--gradient); border-radius: 4px 4px 0 0; opacity: 0.7; }
+  .mc-stat-row { display: flex; gap: 10px; margin-top: 12px; }
+  .mc-stat { flex: 1; background: var(--light); border-radius: 8px; padding: 8px; text-align: center; }
+  .mc-stat-num { font-size: 14px; font-weight: 700; color: var(--violet); font-family: 'Fraunces', serif; }
+  .mc-stat-label { font-size: 8px; color: var(--text-muted); margin-top: 2px; }
+  .mc-avatar-row { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
+  .mc-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--gradient); }
+  .mc-avatar-lines { flex: 1; }
+  .mc-floating-badge {
+    position: absolute;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 30px rgba(91,61,245,0.15);
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600;
+    animation: float2 4s ease-in-out infinite;
+  }
+  .fb-1 { top: 20px; left: 20px; }
+  .fb-2 { bottom: 100px; left: -10px; }
+  .fb-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+  .fb-dot.violet { background: var(--violet); }
+
+  /* ---- STATS BAR ---- */
+  .stats-bar {
+    background: var(--light);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 0;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+  .stat-item { padding: 8px; }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--violet);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+    display: none;
+  }
+
+  /* ---- SECTION STYLES ---- */
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-header h2 { margin: 16px 0 20px; }
+  .section-header p { color: var(--text-muted); max-width: 520px; margin: 0 auto; font-size: 1rem; line-height: 1.7; }
+
+  /* ---- PRICING ---- */
+  #pricing { background: var(--white); }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .pricing-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .pricing-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+  }
+  .pricing-card.featured {
+    border-color: var(--violet);
+    box-shadow: 0 0 0 4px rgba(91,61,245,0.06), var(--shadow-md);
+  }
+  .pricing-card.featured:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 0 4px rgba(91,61,245,0.1), var(--shadow-lg);
+  }
+  .pricing-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+  .badge-starter { background: var(--light); color: var(--text-muted); }
+  .badge-popular { background: var(--gradient); color: #fff; }
+  .badge-premium { background: #1A1A2E; color: #fff; }
+  .pricing-price {
+    margin: 12px 0 6px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .price-amount {
+    font-family: 'Fraunces', serif;
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+  }
+  .price-period { font-size: 13px; color: var(--text-muted); padding-bottom: 6px; }
+  .pricing-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
+  .pricing-features { list-style: none; margin-bottom: 28px; }
+  .pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--light);
+  }
+  .pricing-features li:last-child { border-bottom: none; }
+  .check-icon {
+    width: 18px; height: 18px;
+    background: rgba(91,61,245,0.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .check-icon svg { width: 10px; height: 10px; stroke: var(--violet); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .pricing-ideal { margin-top: 20px; margin-bottom: 28px; }
+  .ideal-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .ideal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ideal-tag {
+    font-size: 11px;
+    background: var(--light);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .pricing-card.featured .ideal-tag { background: rgba(91,61,245,0.06); }
+  .pricing-card .btn { width: 100%; justify-content: center; }
+
+  /* ADDITIONAL SERVICES */
+  .services-block {
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 48px;
+    margin-bottom: 40px;
+  }
+  .services-block h3 { margin-bottom: 28px; font-family: 'Fraunces', serif; font-size: 1.4rem; }
+  .services-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #fff;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+  }
+  .service-item:hover { border-color: var(--violet); transform: translateX(4px); }
+  .service-name { font-size: 13px; font-weight: 500; }
+  .service-price { font-size: 12px; color: var(--violet); font-weight: 600; white-space: nowrap; }
+
+  /* MONTHLY PLAN */
+  .monthly-block {
+    background: var(--gradient);
+    border-radius: var(--radius);
+    padding: 48px;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+  .monthly-block h3 { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 500; margin-bottom: 12px; }
+  .monthly-features { list-style: none; margin: 20px 0; }
+  .monthly-features li { display: flex; align-items: center; gap: 10px; font-size: 14px; opacity: 0.9; padding: 5px 0; }
+  .monthly-features li::before { content: '✓'; font-weight: 700; opacity: 0.8; }
+  .monthly-price-block { text-align: center; }
+  .monthly-from { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.08em; }
+  .monthly-price { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 500; margin: 4px 0; }
+  .monthly-period { font-size: 13px; opacity: 0.7; margin-bottom: 20px; }
+
+  /* ---- ABOUT ---- */
+  #about { background: var(--light); }
+
+  /* TOP BLOCK: photo + text */
+  .about-top {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 72px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .about-photo-wrap { position: relative; }
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .about-photo:hover img { transform: scale(1.04); }
+  .about-accent {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius);
+    background: var(--gradient);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+  }
+  .about-accent-num { font-size: 2rem; font-weight: 500; line-height: 1; }
+  .about-accent-text { font-size: 10px; opacity: 0.85; text-align: center; margin-top: 4px; font-family: 'DM Sans', sans-serif; }
+  .about-content h2 { margin: 16px 0 24px; }
+  .about-content p { color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+
+  /* DOMAINS IMAGE GRID */
+  .about-domains-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .about-domains-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .domains-img-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .domain-img-card {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    background: var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .domain-img-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(91,61,245,0.18);
+  }
+  .domain-img-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .domain-img-card:hover img { transform: scale(1.08); }
+  .domain-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,26,46,0.82) 0%, rgba(26,26,46,0.1) 55%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 14px;
+    transition: background 0.3s;
+  }
+  .domain-img-card:hover .domain-img-overlay {
+    background: linear-gradient(to top, rgba(91,61,245,0.88) 0%, rgba(91,61,245,0.3) 60%, transparent 100%);
+  }
+  .domain-img-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+  .domain-img-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+  }
+
+  /* ---- PORTFOLIO ---- */
+  #portfolio { background: var(--white); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+  .portfolio-item {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--light);
+    aspect-ratio: 4/3;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .portfolio-item > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .portfolio-item:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .portfolio-item:hover > img { transform: scale(1.08); }
+  .portfolio-item:hover .portfolio-overlay { background: rgba(91,61,245,0.88); }
+  .portfolio-item:hover .portfolio-overlay-desc { opacity: 1; transform: translateY(0); }
+  .portfolio-item:hover .portfolio-overlay-tag { opacity: 0; }
+
+  /* Overlay toujours visible en bas avec le titre */
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,26,46,0.82) 0%, rgba(26,26,46,0.15) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px 22px;
+    transition: background 0.35s ease;
+    color: #fff;
+  }
+  .portfolio-overlay-tag {
+    position: absolute;
+    top: 16px; left: 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 4px 10px;
+    border-radius: 50px;
+    color: #fff;
+    transition: opacity 0.3s;
+  }
+  .portfolio-overlay h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    letter-spacing: -0.01em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .portfolio-overlay-desc {
+    font-size: 12px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    margin-top: 6px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.88);
+  }
+  .portfolio-center { text-align: center; }
+
+  /* ---- PROCESS ---- */
+  #process { background: var(--light); }
+  .process-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .process-track::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: calc(12.5% + 20px);
+    right: calc(12.5% + 20px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--violet), var(--blue-violet));
+    opacity: 0.25;
+  }
+  .process-step { padding: 0 20px; text-align: center; }
+  .step-num {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--violet);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+  .process-step:hover .step-num {
+    background: var(--gradient);
+    color: #fff;
+    border-color: transparent;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
+  }
+  .process-step h4 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+  .process-step p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ---- WHY ME ---- */
+  #why { background: var(--white); }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .why-card {
+    padding: 36px 32px;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: transparent; }
+  .why-icon {
+    width: 52px; height: 52px;
+    background: rgba(91,61,245,0.06);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .why-icon svg { width: 24px; height: 24px; stroke: var(--violet); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .why-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+  .why-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  /* ---- TESTIMONIALS ---- */
+  #testimonials { background: var(--light); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testimonial-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  .testimonial-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+  .stars { display: flex; gap: 3px; margin-bottom: 20px; }
+  .star { color: #F59E0B; font-size: 14px; }
+  .testimonial-text { font-size: 14px; color: var(--text); line-height: 1.75; margin-bottom: 28px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .author-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--gradient);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 14px; font-weight: 600; }
+  .author-role { font-size: 12px; color: var(--text-muted); }
+  .quote-mark {
+    position: absolute;
+    top: 24px; right: 28px;
+    font-family: 'Fraunces', serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(91,61,245,0.08);
+    user-select: none;
+  }
+
+  /* ---- FAQ ---- */
+  #faq { background: var(--white); }
+  .faq-container { max-width: 720px; margin: 0 auto; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 20px 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: color 0.2s;
+  }
+  .faq-question:hover { color: var(--violet); }
+  .faq-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--light);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .faq-icon svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; transition: transform 0.3s; }
+  .faq-item.open .faq-icon { background: var(--violet); }
+  .faq-item.open .faq-icon svg { stroke: #fff; transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .faq-item.open .faq-answer { max-height: 300px; }
+  .faq-answer p { font-size: 14px; color: var(--text-muted); line-height: 1.75; padding: 0 4px 24px; }
+
+  /* ---- CTA FINAL ---- */
+  #cta-final {
+    background: var(--gradient);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 0;
+  }
+  #cta-final::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    pointer-events: none;
+  }
+  #cta-final::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -50px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+  .cta-content {
+    text-align: center;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-content .eyebrow { color: rgba(255,255,255,0.7); }
+  .cta-content .eyebrow::before { background: rgba(255,255,255,0.5); }
+  .cta-content h2 { color: #fff; margin: 20px 0 16px; }
+  .cta-content p { opacity: 0.85; max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.7);
+    padding: 72px 0 40px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .footer-logo { color: #fff; margin-bottom: 14px; display: block; }
+  .footer-desc { font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .footer-social a:hover { background: var(--violet); }
+  .footer-col h5 { color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: #fff; }
+  .footer-contact-item { margin-bottom: 12px; }
+  .footer-contact-item a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .footer-contact-item a:hover { color: #fff; }
+  .newsletter-form { display: flex; gap: 8px; margin-top: 8px; }
+  .newsletter-input {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+  .newsletter-input:focus { border-color: rgba(255,255,255,0.4); }
+  .newsletter-btn {
+    background: var(--violet);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .newsletter-btn:hover { background: var(--blue-violet); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ---- SCROLL ANIMATIONS ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .reveal-delay-6 { transition-delay: 0.6s; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { height: 400px; }
+    .mc-main { width: 240px; right: 20px; }
+    .mc-secondary { width: 180px; left: 0; }
+    .mc-tertiary { width: 160px; right: 20px; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .about-top { grid-template-columns: 1fr; gap: 48px; }
+    .about-photo-wrap { max-width: 360px; }
+    .domains-img-grid { grid-template-columns: repeat(3, 1fr); }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-track { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .process-track::before { display: none; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-list { grid-template-columns: 1fr; }
+    .monthly-block { grid-template-columns: 1fr; }
+    .monthly-price-block { text-align: left; }
+  }
+  @media (max-width: 640px) {
+    section { padding: 72px 0; }
+    .nav-links, .nav-cta .btn:not(.btn-primary) { display: none; }
+    .hamburger { display: flex; }
+    .hero-grid { padding: 48px 0 24px; }
+    .hero-visual { display: none; }
+    .hero-perks { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto 48px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .process-track { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-block { padding: 32px 24px; }
+    .monthly-block { padding: 36px 28px; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .domains-img-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo">Jean Paulin <span>Studio</span></a>
+    <ul class="nav-links">
+      <li><a href="#hero">Accueil</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#pricing">Offres & Tarifs</a></li>
+      <li><a href="#portfolio">Réalisations</a></li>
+      <li><a href="#testimonials">Témoignages</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://zcal.co/jeanpaulin/call" class="btn btn-primary" target="_blank">Réserver un appel</a>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-orb orb-1"></div>
+  <div class="hero-bg-orb orb-2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span>Graphiste freelance disponible</span>
+        </div>
+        <h1 class="display hero-title">Transformez vos contenus en supports visuels clairs, modernes et impactants.</h1>
+        <p class="hero-subtitle">Graphiste spécialisé dans la création de supports pédagogiques, présentations professionnelles, documents institutionnels et identités visuelles. J'aide entreprises, institutions et porteurs de projets à rendre leurs messages compréhensibles, attractifs et efficaces.</p>
+        <div class="hero-buttons">
+          <a href="https://tally.so/r/LZ6DGy" class="btn btn-primary" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Demander un devis
+          </a>
+          <a href="#portfolio" class="btn btn-outline">
+            Voir mes réalisations
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="hero-perks">
+          <div class="hero-perk">
+            <div class="perk-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            Design sur mesure
+          </div>
+          <div class="hero-perk">
+            <div class="perk-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            Livraison rapide
+          </div>
+          <div class="hero-perk">
+            <div class="perk-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            Approche pédagogique
+          </div>
+          <div class="hero-perk">
+            <div class="perk-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            Accompagnement
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO VISUAL -->
+      <div class="hero-visual">
+        <!-- Floating badges -->
+        <div class="mc-floating-badge fb-1">
+          <div class="fb-dot"></div>
+          <span>Projet livré ✓</span>
+        </div>
+        <div class="mc-floating-badge fb-2">
+          <div class="fb-dot violet"></div>
+          <span>100% satisfaction</span>
+        </div>
+
+        <!-- Main mockup - Guide formation -->
+        <div class="mockup-card mc-main">
+          <div class="mc-header"></div>
+          <div class="mc-body">
+            <div class="mc-tag">Guide de formation</div>
+            <div class="mc-title-line" style="width:80%"></div>
+            <div class="mc-sub-line" style="width:95%"></div>
+            <div class="mc-sub-line" style="width:70%"></div>
+            <div class="mc-img-block">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5B3DF5" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="9" y2="9"/><line x1="3" y1="15" x2="9" y2="15"/></svg>
+            </div>
+            <div class="mc-sub-line" style="width:90%"></div>
+            <div class="mc-sub-line" style="width:60%"></div>
+            <div class="mc-stat-row">
+              <div class="mc-stat"><div class="mc-stat-num">50+</div><div class="mc-stat-label">Projets</div></div>
+              <div class="mc-stat"><div class="mc-stat-num">4★</div><div class="mc-stat-label">Qualité</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary mockup - Presentation -->
+        <div class="mockup-card mc-secondary">
+          <div class="mc-header" style="height:6px; background: linear-gradient(90deg, #F59E0B, #EF4444)"></div>
+          <div class="mc-body" style="padding:16px">
+            <div class="mc-tag" style="background:rgba(245,158,11,0.1); color:#B45309">Présentation</div>
+            <div class="mc-title-line" style="width:85%; height:8px"></div>
+            <div class="mc-sub-line" style="width:100%"></div>
+            <div class="mc-chart">
+              <div class="mc-bar" style="height:60%; opacity:0.5"></div>
+              <div class="mc-bar" style="height:85%; opacity:0.7"></div>
+              <div class="mc-bar" style="height:70%; opacity:0.6"></div>
+              <div class="mc-bar" style="height:100%"></div>
+              <div class="mc-bar" style="height:75%; opacity:0.7"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tertiary mockup - Infographic -->
+        <div class="mockup-card mc-tertiary">
+          <div class="mc-header" style="height:5px; background: linear-gradient(90deg, #10B981, #06B6D4)"></div>
+          <div class="mc-body" style="padding:16px">
+            <div class="mc-tag" style="background:rgba(16,185,129,0.08); color:#059669">Infographie</div>
+            <div class="mc-avatar-row">
+              <div class="mc-avatar" style="background: linear-gradient(135deg, #10B981, #06B6D4)"></div>
+              <div class="mc-avatar-lines">
+                <div class="mc-sub-line" style="width:90%; margin-bottom:4px"></div>
+                <div class="mc-sub-line" style="width:65%"></div>
+              </div>
+            </div>
+            <div class="mc-sub-line" style="width:100%; margin-top:10px"></div>
+            <div class="mc-sub-line" style="width:80%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Projets réalisés</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Clients accompagnés</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num">4 ans</div>
+        <div class="stat-label">D'expérience</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Engagement qualité</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Offres & Tarifs</span>
+      <h2 class="display">Des solutions adaptées à vos besoins</h2>
+      <p>Choisissez la formule qui correspond à votre projet.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Essentiel -->
+      <div class="pricing-card reveal">
+        <span class="pricing-badge badge-starter">Starter</span>
+        <h3>Essentiel</h3>
+        <div class="pricing-price">
+          <span class="price-amount">80€</span>
+          <span class="price-period">/ projet</span>
+        </div>
+        <p class="pricing-desc">Pour les petites structures, entrepreneurs ou besoins ponctuels.</p>
+        <ul class="pricing-features">
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Mise en page simple et professionnelle</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Supports PDF ou documents visuels</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Design adapté à votre identité visuelle</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>2 retouches incluses</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Livraison rapide</li>
+        </ul>
+        <div class="pricing-ideal">
+          <div class="ideal-title">Idéal pour</div>
+          <div class="ideal-tags">
+            <span class="ideal-tag">Fiches pédagogiques</span>
+            <span class="ideal-tag">Brochures simples</span>
+            <span class="ideal-tag">Mini-présentations</span>
+            <span class="ideal-tag">Documents internes</span>
+          </div>
+        </div>
+        <a href="https://tally.so/r/LZ6DGy" class="btn btn-outline" target="_blank">Choisir cette offre</a>
+      </div>
+
+      <!-- Professionnel (featured) -->
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <span class="pricing-badge badge-popular">Populaire</span>
+        <h3>Professionnel</h3>
+        <div class="pricing-price">
+          <span class="price-amount">250€</span>
+          <span class="price-period">/ projet</span>
+        </div>
+        <p class="pricing-desc">Pour les projets nécessitant une identité visuelle plus travaillée.</p>
+        <ul class="pricing-features">
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Design personnalisé et moderne</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Hiérarchisation claire des informations</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Mise en page multi-pages</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Infographies et éléments visuels</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Optimisation de la lisibilité</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Jusqu'à 4 retouches</li>
+        </ul>
+        <div class="pricing-ideal">
+          <div class="ideal-title">Idéal pour</div>
+          <div class="ideal-tags">
+            <span class="ideal-tag">Supports de formation</span>
+            <span class="ideal-tag">Présentations pro</span>
+            <span class="ideal-tag">Documents institutionnels</span>
+            <span class="ideal-tag">E-books</span>
+            <span class="ideal-tag">Guides PDF</span>
+          </div>
+        </div>
+        <a href="https://tally.so/r/LZ6DGy" class="btn btn-primary" target="_blank">Choisir cette offre</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card reveal reveal-delay-2">
+        <span class="pricing-badge badge-premium">Premium</span>
+        <h3>Premium</h3>
+        <div class="pricing-price">
+          <span class="price-amount">600€</span>
+          <span class="price-period">/ projet</span>
+        </div>
+        <p class="pricing-desc">Solution complète haut de gamme pour vos projets d'envergure.</p>
+        <ul class="pricing-features">
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Direction artistique complète</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Design stratégique</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Templates personnalisés</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Infographies avancées</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Accompagnement complet</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Révisions prioritaires</li>
+          <li><div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Export print & digital</li>
+        </ul>
+        <div class="pricing-ideal">
+          <div class="ideal-title">Idéal pour</div>
+          <div class="ideal-tags">
+            <span class="ideal-tag">Formations complètes</span>
+            <span class="ideal-tag">Supports corporate</span>
+            <span class="ideal-tag">Documents premium</span>
+            <span class="ideal-tag">Projets pédagogiques</span>
+          </div>
+        </div>
+        <a href="https://tally.so/r/LZ6DGy" class="btn btn-outline" target="_blank">Choisir cette offre</a>
+      </div>
+    </div>
+
+    <!-- Additional Services -->
+    <div class="services-block reveal">
+      <h3>Services complémentaires</h3>
+      <div class="services-list">
+        <div class="service-item">
+          <span class="service-name">Présentation PowerPoint / Canva / Slides</span>
+          <span class="service-price">à partir de 15 € / slide</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Infographie personnalisée</span>
+          <span class="service-price">à partir de 40 €</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Mise en page PDF</span>
+          <span class="service-price">à partir de 8 € / page</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Bannière LinkedIn / Réseaux sociaux</span>
+          <span class="service-price">à partir de 35 €</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Identité visuelle simple</span>
+          <span class="service-price">à partir de 120 €</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Plan -->
+    <div class="monthly-block reveal">
+      <div>
+        <h3>Besoin d'un graphiste régulier ?</h3>
+        <p style="opacity:0.85; font-size:14px; line-height:1.7">Collaborez de façon continue avec un designer dédié à votre projet et bénéficiez d'une cohérence visuelle parfaite.</p>
+        <ul class="monthly-features">
+          <li>Créations sous volume défini</li>
+          <li>Priorité sur les délais</li>
+          <li>Cohérence visuelle garantie</li>
+          <li>Support créatif continu</li>
+        </ul>
+      </div>
+      <div class="monthly-price-block">
+        <div class="monthly-from">à partir de</div>
+        <div class="monthly-price">400€</div>
+        <div class="monthly-period">par mois</div>
+        <a href="https://zcal.co/jeanpaulin/call" class="btn btn-white" target="_blank">Planifier un appel</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+
+    <!-- TOP: Portrait + texte -->
+    <div class="about-top">
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo">
+          <!-- Photo professionnelle : graphiste au bureau, prise en studio -->
+          <img
+            src="image/paulin.png"
+            alt="Jean Paulin — Graphiste freelance spécialisé design pédagogique"
+            loading="lazy"
+          />
+        </div>
+        <div class="about-accent">
+          <div class="about-accent-num">4</div>
+          <div class="about-accent-text">ans d'expérience</div>
+        </div>
+      </div>
+
+      <div class="about-content reveal reveal-delay-2">
+        <span class="eyebrow">À propos</span>
+        <h2 class="display">Le design au service de la compréhension</h2>
+        <p>Graphiste spécialisé dans la création de supports visuels clairs, modernes et engageants, j'accompagne les entreprises, institutions et porteurs de projets dans la conception de contenus à forte valeur pédagogique et communicationnelle.</p>
+        <p>À travers mon expérience dans l'enseignement et le design graphique, j'ai développé une approche centrée sur la compréhension, la lisibilité et l'impact visuel.</p>
+        <p>Mon objectif est de transformer des informations parfois complexes en supports structurés, accessibles et agréables à consulter, tout en respectant l'identité et les besoins de chaque projet.</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM: Grille d'images par domaine d'intervention -->
+    <div class="reveal">
+      <div class="about-domains-title">Domaines d'intervention</div>
+      <div class="domains-img-grid">
+
+        <!-- 1. Supports pédagogiques -->
+        <div class="domain-img-card reveal">
+          <img
+            src="image/lycée Ampitatstimo.png"
+            alt="Supports pédagogiques"
+            loading="lazy"
+          />
+          <div class="domain-img-overlay">
+            <div class="domain-img-label">Supports pédagogiques</div>
+            <div class="domain-img-sub">Guides, fiches, modules de formation</div>
+          </div>
+        </div>
+
+        <!-- 2. Présentations professionnelles -->
+        <div class="domain-img-card reveal reveal-delay-1">
+          <img
+            src="image/présentation professionnelle.png"
+            alt="Présentations professionnelles"
+            loading="lazy"
+          />
+          <div class="domain-img-overlay">
+            <div class="domain-img-label">Présentations professionnelles</div>
+            <div class="domain-img-sub">PowerPoint, Canva, Google Slides</div>
+          </div>
+        </div>
+
+        <!-- 3. Documents institutionnels — plusieurs magazines imprimés -->
+        <div class="domain-img-card reveal reveal-delay-2">
+          <img
+            src="image/rapport annuel 2.png"
+            alt="Documents institutionnels"
+            loading="lazy"
+          />
+          <div class="domain-img-overlay">
+            <div class="domain-img-label">Documents institutionnels</div>
+            <div class="domain-img-sub">Rapports, brochures, documents officiels</div>
+          </div>
+        </div>
+
+        <!-- 4. Identités visuelles — cartes de visite et brochures -->
+        <div class="domain-img-card reveal reveal-delay-3">
+          <img
+            src="image/identité visuel (2).png"
+            alt="Identités visuelles"
+            loading="lazy"
+          />
+          <div class="domain-img-overlay">
+            <div class="domain-img-label">Identités visuelles</div>
+            <div class="domain-img-sub">Logo, charte graphique, brand design</div>
+          </div>
+        </div>
+
+        <!-- 5. Infographies — illustration vectorielle colorée -->
+        <div class="domain-img-card reveal reveal-delay-4">
+          <img
+            src="image/infographie peda.png"
+            alt="Infographies"
+            loading="lazy"
+          />
+          <div class="domain-img-overlay">
+            <div class="domain-img-label">Infographies</div>
+            <div class="domain-img-sub">Visualisation de données, schémas</div>
+          </div>
+        </div>
+
+        <!-- 6. Documents PDF interactifs -->
+        <div class="domain-img-card reveal reveal-delay-5">
+          <img
+            src="image/PDF intéractif.png"
+            alt="Documents PDF interactifs"
+            loading="lazy"
+          />
+          <div class="domain-img-overlay">
+            <div class="domain-img-label">Documents PDF interactifs</div>
+            <div class="domain-img-sub">Mise en page print & digital</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Réalisations</span>
+      <h2 class="display">Quelques projets réalisés</h2>
+      <p>Un aperçu de mes créations — chaque projet, une histoire visuelle unique.</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <!-- 1. Guide de formation -->
+      <div class="portfolio-item reveal">
+        <img
+          src="image/guide de formation.png"
+          alt="Guide de formation"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-overlay-tag">Formation</span>
+          <h4>Guide de formation</h4>
+          <p class="portfolio-overlay-desc">Support pédagogique complet avec hiérarchie visuelle claire et mise en page professionnelle.</p>
+        </div>
+      </div>
+
+      <!-- 2. Présentation d'entreprise -->
+      <div class="portfolio-item reveal reveal-delay-1">
+        <img
+          src="image/présentation d'entreprise.png"
+          alt="Présentation d'entreprise"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-overlay-tag">Corporate</span>
+          <h4>Présentation d'entreprise</h4>
+          <p class="portfolio-overlay-desc">Deck corporate moderne avec data visualisation et storytelling visuel impactant.</p>
+        </div>
+      </div>
+
+      <!-- 3. Infographie pédagogique -->
+      <div class="portfolio-item reveal reveal-delay-2">
+        <img
+          src="image/infographie peda.png"
+          alt="Infographie pédagogique"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-overlay-tag">Pédagogie</span>
+          <h4>Infographie pédagogique</h4>
+          <p class="portfolio-overlay-desc">Visualisation de données complexes rendue accessible et visuellement attractive.</p>
+        </div>
+      </div>
+
+      <!-- 4. Brochure institutionnelle -->
+      <div class="portfolio-item reveal reveal-delay-3">
+        <img
+          src="image/brochure.png"
+          alt="Brochure institutionnelle"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-overlay-tag">Institutionnel</span>
+          <h4>Brochure institutionnelle</h4>
+          <p class="portfolio-overlay-desc">Document officiel alliant sobriété et professionnalisme pour une communication institutionnelle.</p>
+        </div>
+      </div>
+
+      <!-- 5. Identité visuelle -->
+      <div class="portfolio-item reveal reveal-delay-4">
+        <img
+          src="image/identité visuel.png"
+          alt="Identité visuelle"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-overlay-tag">Identité</span>
+          <h4>Identité visuelle</h4>
+          <p class="portfolio-overlay-desc">Conception d'une identité complète — logo, palette, typographies et charte graphique.</p>
+        </div>
+      </div>
+
+      <!-- 6. Rapport annuel -->
+      <div class="portfolio-item reveal reveal-delay-5">
+        <img
+          src="image/rapport annuel.png"
+          alt="Rapport annuel"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-overlay-tag">Rapport</span>
+          <h4>Rapport annuel</h4>
+          <p class="portfolio-overlay-desc">Publication annuelle premium combinant données chiffrées et narration visuelle engageante.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="portfolio-center reveal">
+      <a href="https://tally.so/r/LZ6DGy" class="btn btn-primary" target="_blank">Voir toutes les réalisations</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Processus</span>
+      <h2 class="display">Une collaboration simple et efficace</h2>
+      <p>Du brief à la livraison, un accompagnement clair et structuré à chaque étape.</p>
+    </div>
+    <div class="process-track">
+      <div class="process-step reveal">
+        <div class="step-num">01</div>
+        <h4>Analyse du besoin</h4>
+        <p>Compréhension approfondie de votre projet, de vos objectifs et de votre audience cible.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <h4>Structuration du contenu</h4>
+        <p>Organisation logique des informations pour assurer clarté et fluidité de lecture.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <h4>Design & conception</h4>
+        <p>Création graphique professionnelle avec proposition de maquettes et itérations.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <h4>Livraison & ajustements</h4>
+        <p>Validation finale, retouches incluses et export dans les formats souhaités.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Pourquoi moi</span>
+      <h2 class="display">Ce qui fait la différence</h2>
+      <p>Une expertise au carrefour du design et de la pédagogie, au service de votre communication.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h4>Design stratégique</h4>
+        <p>Chaque choix graphique répond à un objectif précis : améliorer la compréhension, capter l'attention, guider la lecture.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h4>Approche pédagogique</h4>
+        <p>Formé à la pédagogie, je sais structurer l'information pour qu'elle soit apprise, mémorisée et comprise.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h4>Qualité professionnelle</h4>
+        <p>Des livrables soignés, prêts à l'emploi, conformes aux standards du design éditorial et graphique contemporain.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h4>Réactivité</h4>
+        <p>Réponse rapide aux demandes, communication fluide et adaptabilité aux imprévus de votre projet.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h4>Respect des délais</h4>
+        <p>Livraisons ponctuelles garanties, avec un suivi transparent de l'avancement à chaque étape du projet.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-5">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h4>Accompagnement personnalisé</h4>
+        <p>Une relation directe, sans intermédiaire, pour comprendre vraiment vos besoins et adapter les livrables à votre contexte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Témoignages</span>
+      <h2 class="display">Ce que disent mes clients</h2>
+      <p>La satisfaction de mes clients est le meilleur indicateur de la qualité de mon travail.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="quote-mark">"</div>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-text">Jean Paulin a transformé notre support de formation en un document vraiment professionnel. La clarté visuelle, la hiérarchie de l'information, tout est parfaitement pensé. Nos apprenants trouvent le contenu beaucoup plus accessible qu'avant.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div>
+            <div class="author-name">Mbarahasina A.</div>
+            <div class="author-role">Responsable formation, ONG internationale</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="quote-mark">"</div>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-text">Très réactif, à l'écoute et d'une qualité de travail irréprochable. Notre présentation institutionnelle a été livrée dans les délais avec un résultat qui a impressionné notre conseil d'administration. Je recommande vivement.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #F59E0B, #EF4444)">J</div>
+          <div>
+            <div class="author-name">juvance .</div>
+            <div class="author-role">Docteur</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="quote-mark">"</div>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-text">Collaboration mensuelle depuis 6 mois et je ne peux plus m'en passer. Jean Paulin Studio  comprend parfaitement notre identité visuelle et produit des livrables cohérents, modernes et toujours dans les temps. Un vrai partenaire créatif.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #10B981, #06B6D4)">M</div>
+          <div>
+            <div class="author-name">Manda H. R.</div>
+            <div class="author-role">Fondateur, Andrarezina</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="display">Questions fréquentes</h2>
+      <p>Tout ce que vous devez savoir avant de démarrer notre collaboration.</p>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item reveal">
+        <button class="faq-question">
+          Quels sont vos délais de livraison ?
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="faq-answer"><p>Les délais varient selon la complexité du projet. Pour l'offre Essentiel, comptez 2 à 5 jours ouvrés. Pour le Professionnel, 5 à 10 jours. Pour le Premium, de 10 à 21 jours. Les délais précis sont définis ensemble lors du brief initial.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question">
+          Combien de retouches sont incluses ?
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="faq-answer"><p>L'offre Essentiel inclut 2 retouches, l'offre Professionnel 4 retouches, et l'offre Premium bénéficie de révisions prioritaires sans limite raisonnable. Des retouches supplémentaires peuvent être ajoutées au tarif horaire.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-question">
+          Travaillez-vous à distance ?
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="faq-answer"><p>Oui, je travaille entièrement à distance et collabore avec des clients dans le monde entier. La communication se fait par email, WhatsApp ou visioconférence selon vos préférences. La distance n'est jamais un obstacle à une collaboration efficace.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <button class="faq-question">
+          Quels formats livrez-vous ?
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="faq-answer"><p>Les livrables sont fournis selon vos besoins : PDF (print ou digital), PNG, JPEG, fichiers source modifiables (Canva, PowerPoint, InDesign, Illustrator). Je m'adapte à vos outils et à l'usage final du document.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-4">
+        <button class="faq-question">
+          Comment se passe le paiement ?
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="faq-answer"><p>Un acompte de 50% est demandé au démarrage du projet, le solde à la livraison finale. Les paiements sont acceptés par virement bancaire ou via PayPal. Pour les forfaits mensuels, la facturation est mensuelle.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-5">
+        <button class="faq-question">
+          Proposez-vous des forfaits mensuels ?
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="faq-answer"><p>Oui, le forfait Freelance Mensuel à partir de 400€/mois est idéal pour les structures ayant des besoins réguliers en design. Il inclut un volume de créations défini, une priorité sur les délais et une cohérence visuelle parfaite sur le long terme.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="container">
+    <div class="cta-content">
+      <span class="eyebrow">Commencer maintenant</span>
+      <h2 class="display">Prêt à donner plus d'impact à vos contenus ?</h2>
+      <p>Discutons de votre projet et créons ensemble des supports qui valorisent votre message et captivent votre audience.</p>
+      <div class="cta-buttons">
+        <a href="https://tally.so/r/LZ6DGy" class="btn btn-white" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Demander un devis
+        </a>
+        <a href="https://zcal.co/jeanpaulin/call" class="btn btn-ghost-white" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Réserver un appel
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="logo footer-logo">Jean Paulin <span>Studio</span></a>
+        <p class="footer-desc">Design pédagogique & communication visuelle. Je transforme vos contenus en supports impactants.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/in/randriamanana-jean-paulin-484313211" target="_blank" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Liens rapides</h5>
+        <ul class="footer-links">
+          <li><a href="#hero">Accueil</a></li>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#pricing">Offres</a></li>
+          <li><a href="#portfolio">Réalisations</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <div class="footer-contact-item">
+          <a href="https://www.linkedin.com/in/randriamanana-jean-paulin-484313211" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="footer-contact-item">
+          <a href="https://zcal.co/jeanpaulin/call" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Réserver un appel
+          </a>
+        </div>
+        <div class="footer-contact-item">
+          <a href="https://tally.so/r/LZ6DGy" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Demande de devis
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Newsletter</h5>
+        <p style="font-size:13px; margin-bottom:14px; line-height:1.6">Recevez des conseils sur le design pédagogique et la communication visuelle.</p>
+        <div class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Votre email">
+          <button class="newsletter-btn">S'inscrire</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Jean Paulin Studio. Tous droits réservés.</span>
+      <span>Design pédagogique & Communication visuelle</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Counter animation for stats
+  function animateCounter(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1800;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nums = entry.target.querySelectorAll('.stat-num');
+        nums.forEach(num => {
+          const text = num.textContent;
+          if (text.includes('+')) {
+            const val = parseInt(text);
+            animateCounter(num, val, '+');
+          } else if (text.includes('%')) {
+            const val = parseInt(text);
+            animateCounter(num, val, '%');
+          }
+        });
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsSection = document.querySelector('.stats-bar');
+  if (statsSection) statsObserver.observe(statsSection);
+</script>
+</body>
+</html>
